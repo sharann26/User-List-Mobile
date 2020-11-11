@@ -1,5 +1,7 @@
 {
   "name": "user-list",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }

@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{ isNewUser ? 'Register' : 'Login' }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="registerForm" *ngIf="isNewUser">
+    <ion-item>
+      <ion-input type="text" placeholder="First Name" formControlName="f_name"
+        [class.invalid]="!curntForm.f_name.valid && (curntForm.f_name.dirty || submitted)"></ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.f_name.valid  && (curntForm.f_name.dirty || submitted)">
+      <p class="fontRed">Please enter valid first name.</p>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="Last Name" formControlName="l_name"
+        [class.invalid]="!curntForm.l_name.valid && (curntForm.l_name.dirty || submitted)"></ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.l_name.valid  && (curntForm.l_name.dirty || submitted)">
+      <p class="fontRed">Please enter valid last name.</p>
+    </ion-item>
+    <ion-item>
+      <ion-label class="margin2">Gender</ion-label>
+      <ion-select formControlName="gender" interface="popover" 
+        [class.invalid]="!curntForm.gender.valid && (curntForm.gender.dirty || submitted)">
+        <ion-option *ngFor="let resp of genderList" value="{{resp}}">{{ resp }}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.gender.valid  && (curntForm.gender.dirty || submitted)">
+      <p class="fontRed">Please select valid gender.</p>
+    </ion-item>
+    <ion-item>
+      <ion-input type="email" placeholder="Email" formControlName="email"
+        [class.invalid]="!curntForm.email.valid && (curntForm.email.dirty || submitted)"></ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.email.valid  && (curntForm.email.dirty || submitted)">
+      <p class="fontRed">Please enter valid email.</p>
+    </ion-item>
+    <ion-item>
+      <ion-input type="tel" placeholder="Mobile No" formControlName="mobile"
+        [class.invalid]="!curntForm.mobile.valid && (curntForm.mobile.dirty || submitted)"></ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.mobile.valid  && (curntForm.mobile.dirty || submitted)">
+      <p class="fontRed">Please enter valid mobile no.</p>
+    </ion-item>
+    <ion-item>
+      <ion-label class="margin2">Area of interest</ion-label>
+      <ion-select multiple="true" cancelText="NO" okText="YEAH !" formControlName="area_of_interest"
+        [class.invalid]="!curntForm.area_of_interest.valid && (curntForm.area_of_interest.dirty || submitted)">
+        <ion-option *ngFor="let resp of areaOfIntestList" value="{{resp}}">{{resp}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.area_of_interest.valid  && (curntForm.area_of_interest.dirty || submitted)">
+      <p class="fontRed">Please select area of interest.</p>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" placeholder="Password" formControlName="pwd"
+        [class.invalid]="!curntForm.pwd.valid && (curntForm.pwd.dirty || submitted)"></ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.pwd.valid  && (curntForm.pwd.dirty || submitted)">
+      <p class="fontRed">Please enter a valid password.</p>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" placeholder="Password again" formControlName="confirm_pwd"
+        [class.invalid]="!curntForm.confirm_pwd.valid && (curntForm.confirm_pwd.dirty || submitted)"></ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.confirm_pwd.valid  && (curntForm.confirm_pwd.dirty || submitted)">
+      <p class="fontRed" *ngIf="curntForm.confirm_pwd.errors.required">Please enter a valid confirm password.</p>
+      <p class="fontRed" *ngIf="curntForm.confirm_pwd.errors.isNotSame">Password & Confirm password are not same.</p>
+    </ion-item>
+  </form>
+  <form [formGroup]="loginForm" *ngIf="!isNewUser">
+    <ion-item>
+      <ion-input type="email" placeholder="Email" formControlName="email"
+        [class.invalid]="!curntForm.email.valid && (curntForm.email.dirty || submitted)"
+        (change)="omitValidation()">
+      </ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.email.valid  && (curntForm.email.dirty || submitted)">
+      <p class="fontRed">Please enter a valid email.</p>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" placeholder="Password" formControlName="pwd"
+        [class.invalid]="!curntForm.pwd.valid && (curntForm.pwd.dirty || submitted)"></ion-input>
+    </ion-item>
+    <ion-item no-lines *ngIf="!curntForm.pwd.valid  && (curntForm.pwd.dirty || submitted)">
+      <p class="fontRed">Please enter a valid password.</p>
+    </ion-item>
+  </form>
+  <div style="text-align: center;">
+    <button ion-button type="submit" expand="block" (click)="isNewUser ? registerUser() : loginUser()">
+      {{ isNewUser ? 'Register' : 'Login' }}</button>
+    <div text-center>{{ !isNewUser ? "Don't have account" : "Already having account" }} <a
+        (click)="goToRegisterOrLogin()">{{ !isNewUser ? 'Register' : 'Login' }}</a></div>
+  </div>
+</ion-content>

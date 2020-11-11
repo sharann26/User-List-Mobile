@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{ list ? 'User List' : 'User Details' }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h4 *ngIf="(api.isAdmin && isListView) || !api.isAdmin">Welcome {{ api.isAdmin ? 'Admin' : userDetail.user_name }}
+  </h4>
+  <ion-toolbar *ngIf="api.isAdmin && isListView">
+    <ion-searchbar placeholder="Filter Users" [(ngModel)]="searchVal" (ionInput)="filterUsers()"></ion-searchbar>
+  </ion-toolbar>
+  <ion-list *ngIf="isListView">
+    <ion-item *ngFor="let resp of userList; let i = index" (click)="gotoUserDetails(resp.email)">
+      <ion-label>{{ resp.email }}</ion-label>
+      <button ion-button clear item-end>
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-item>
+
+
+    <ion-item *ngIf="userList.length == 0">
+      <ion-label>No matching records found !!</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-card *ngIf="!isListView">
+    <ion-card-content>
+      <ion-item>
+        <ion-label>First Name: {{ userDetail.first_name }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Last Name: {{ userDetail.last_name }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Gender: {{ userDetail.gender }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email: {{ userDetail.email }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mobile: {{ userDetail.mobile_no }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Area of interest: {{ userDetail.area_of_interest }}</ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <div style="text-align: center;">
+    <button ion-button align-center (click)="gotoUserList()" *ngIf="api.isAdmin && !isListView">Back</button>
+  </div>
+</ion-content>

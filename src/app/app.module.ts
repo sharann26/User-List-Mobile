@@ -4,26 +4,39 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { MyApp } from './app.component'; 
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+
+// Pages
+import { UserDetailPage } from '../pages/user-detail/user-detail';
+import { LoginPage } from '../pages/login/login';
+
+//Providers
+import { Api } from '../providers/api';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    UserDetailPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    UserDetailPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Api,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
